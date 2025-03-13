@@ -44,7 +44,10 @@ def suggest_recipes(df, available_ingredients):
     
     df = df.copy()  # Avoid SettingWithCopyWarning
     df["Matches"] = df["Ingredients"].apply(count_matches)
-    
+
+    # Exclude recipes with zero matches unless available_ingredients is empty.
+    if available_ingredients:
+        df = df[df["Matches"] > 0] # Exclude recipes with zero matches.
     top_recipes = df.sort_values(by="Matches", ascending=False).head(3)
     return top_recipes[["Name", "Method", "Ingredients", "Matches"]]
 
