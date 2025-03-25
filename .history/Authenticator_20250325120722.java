@@ -8,12 +8,12 @@ import java.io.*;
  *      2) LOGGING IN TO AN EXISTING ACCOUNT, TYPE: java Authenticator "login"
  */
 
-public class Authenticator {
+public class Authenticator{
 
-    void createAccount() {
+    void createAccount(){
+        System.out.println("Starting account creation..."); // Test line
         String forename, surname, email, dob, username, password;
         Scanner sc = new Scanner(System.in);
-        
         // Get user information
         System.out.println("=== Create a New Account ===");
         
@@ -49,7 +49,7 @@ public class Authenticator {
         }
     }
 
-    void login() {
+    void login(){
         String username, password;
         Scanner sc = new Scanner(System.in);
         boolean loginSuccess = false;
@@ -95,19 +95,22 @@ public class Authenticator {
 
     public static void main(String[] args) {
         // "create" for creating an account, "login" for logging in to an account.
-        if (args.length == 1) {
+        if(args.length == 1){
             Authenticator ob = new Authenticator();
 
-            if (args[0].equals("create")) {
-                ob.createAccount();
-            } else if (args[0].equals("login")) {
-                ob.login();
-            } else {
-                System.out.println("Error: Invalid Option!");
+            if(args[0].equals("create"))
+            ob.createAccount();
+
+            else if(args[0].equals("login"))
+            ob.login();
+
+            else{
+                System.out.println("Error:  Invalid Option!");
                 System.out.println("\t[Authenticator Error {main}]");
             }
-        } else {
-            System.out.println("Error: No option was selected!");
+        }
+        else{
+            System.out.println("Error:  No option was selected!");
             System.out.println("\t[Authenticator Error {main}]");
         }
     }
