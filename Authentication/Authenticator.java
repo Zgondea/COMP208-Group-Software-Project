@@ -35,11 +35,15 @@ public class Authenticator {
         System.out.print("Create password: ");
         password = sc.nextLine();
         
+        // Hash the Password
+        Hasher ob = new Hasher();
+        String hashedPass = ob.hashPassword(password);
+
         // Store account information in a file
         try {
-            File userFile = new File("users.txt");
+            File userFile = new File("usersFile.txt");
             FileWriter fw = new FileWriter(userFile, true);
-            fw.write(username + "," + password + "," + forename + "," + 
+            fw.write(username + "," + hashedPass + "," + forename + "," + 
                     surname + "," + email + "," + dob + "\n");
             fw.close();
             System.out.println("Account created successfully!");
@@ -64,16 +68,15 @@ public class Authenticator {
         
         // Check credentials against stored accounts
         try {
-            File userFile = new File("users.txt");
+            File userFile = new File("usersFile.txt");
             Scanner fileScanner = new Scanner(userFile);
             
             while (fileScanner.hasNextLine()) {
                 String line = fileScanner.nextLine();
                 String[] userData = line.split(",");
-                
-                if (userData.length >= 2 && 
-                    userData[0].equals(username) && 
-                    userData[1].equals(password)) {
+                Hasher ob = new Hasher();
+                boolean passIsCorrect = ob.checkPassword(password, userData[1]);
+                if(userData.length >= 2 && userData[0].equals(username) && passIsCorrect){
                     loginSuccess = true;
                     break;
                 }
